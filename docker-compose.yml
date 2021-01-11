@@ -1,0 +1,31 @@
+ 
+version: "3"
+services:
+  app:
+    container_name: sokomin-app
+    build: .
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - .:/var/www/html
+    networks:
+      - sokomin-network
+  db:
+    container_name: sokomin-db
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=weloveredstone
+      - MYSQL_DATABASE=sokomin
+    networks: 
+      - sokomin-network
+        
+volumes:
+  db-data:
+networks:
+  sokomin-network:
+    driver: bridge
